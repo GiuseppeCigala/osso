@@ -34,7 +34,17 @@ int Device::get_mixer_fd()
 
     if ((mixer_fd = open(dev_mixer, O_RDWR, mode)) == -1)
     {
-        qCritical() << "Error on open the mixer";
+        switch (errno)
+        {
+        case ENXIO:
+        case ENODEV:
+            qCritical() << "Open Sound System is not running in your system.\n";
+            break;
+
+        case ENOENT:
+            qCritical() << "No mixer device available in your system.\n";
+            break;
+        }
         exit (-1);
     }
     return mixer_fd;
@@ -49,8 +59,16 @@ int Device::get_mixer_dev(int mixer_fd)
 
     if (ioctl (mixer_fd, SNDCTL_SYSINFO, &sysinfo) == -1)
     {
-        qCritical() << "SNDCTL_SYSINFO Error.";
-        exit (-1);
+        if (errno == ENXIO)
+        {
+            qCritical() << "OSS has not detected any supported sound hardware in your system.\n";
+            exit (-1);
+        }
+        if (errno == EINVAL)
+        {
+            qCritical() << "Error: OSS version 4.0 or later is required.\n";
+            exit (-1);
+        }
     }
 
     for (int i = 0; i < sysinfo.nummixers; i++)
@@ -87,29 +105,38 @@ QMap <QString, QString> Device::get_system_info()
     oss_mixerinfo mi;
     int mixer_fd = get_mixer_fd();
     int mixer_dev = get_mixer_dev(mixer_fd);
-    
+
     mi.dev = mixer_dev;
 
     if (ioctl (mixer_fd, SNDCTL_MIXERINFO, &mi) == -1)
     {
-        qCritical() << "SNDCTL_MIXERINFO Error";
-        exit (-1);
+        if (errno == ENXIO || errno == ENODEV)
+        {
+            qCritical() << "Mixer Device not available\n";
+            exit (-1);
+        }
     }
-
     if (ioctl (mixer_fd, SNDCTL_SYSINFO, &sysinfo) == -1)
     {
-        qCritical() << "SNDCTL_SYSINFO Error.";
-        exit (-1);
+        if (errno == ENXIO)
+        {
+            qCritical() << "OSS has not detected any supported sound hardware in your system.\n";
+            exit (-1);
+        }
+        if (errno == EINVAL)
+        {
+            qCritical() << "Error: OSS version 4.0 or later is required.\n";
+            exit (-1);
+        }
     }
-
-    system_info.insert(tr("1. Mixer device"), QString("%1").arg(mi.name));
-    system_info.insert(tr("2. Product"), QString("%1").arg(sysinfo.product));
-    system_info.insert(tr("3. Version"), QString("%1").arg(sysinfo.version));
-    system_info.insert(tr("4. Version num"),QString("%1").arg(sysinfo.versionnum));
-    system_info.insert(tr("5. License"), QString("%1").arg(sysinfo.license));
-    system_info.insert(tr("6. Audio num"), QString("%1").arg(sysinfo.numaudios));
-    system_info.insert(tr("7. Audio Engines num"), QString("%1").arg(sysinfo.numaudioengines));
-    system_info.insert(tr("8. Sound Cards num"), QString("%1").arg(sysinfo.numcards));
+    system_info.insert(tr("1. Mixer device:"), QString("%1").arg(mi.name));
+    system_info.insert(tr("2. Product:"), QString("%1").arg(sysinfo.product));
+    system_info.insert(tr("3. Version:"), QString("%1").arg(sysinfo.version));
+    system_info.insert(tr("4. Version num:"),QString("%1").arg(sysinfo.versionnum));
+    system_info.insert(tr("5. License:"), QString("%1").arg(sysinfo.license));
+    system_info.insert(tr("6. Audio Device files:"), QString("%1").arg(sysinfo.numaudios));
+    system_info.insert(tr("7. Audio Engines:"), QString("%1").arg(sysinfo.numaudioengines));
+    system_info.insert(tr("8. Sound Cards:"), QString("%1").arg(sysinfo.numcards));
 
     return system_info;
 }

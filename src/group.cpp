@@ -12,6 +12,7 @@ Group::Group(Extension *ex, QWidget * parent) : QGroupBox(parent)
 {
     ext = ex;
     setWindowTitle(ext->get_id());
+    setWindowIcon(QIcon(":/icons/osso.png"));
     init();
 }
 

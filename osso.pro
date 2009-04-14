@@ -32,3 +32,4 @@ QMAKE_INCDIR += /usr/include
 QMAKE_CLEAN += osso
 TEMPLATE = app
 CONFIG += warn_on release
+RESOURCES += osso.qrc

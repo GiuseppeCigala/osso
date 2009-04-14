@@ -9,10 +9,14 @@
 
 ////////////////////////////////////////
 
-Mixer::Mixer(QWidget * parent) : QDialog(parent)
+Mixer::Mixer(QWidget * parent) : QFrame(parent)
 {
-    setWindowTitle(tr("Mixer"));
+    setWindowTitle(tr("Osso - Qt4 OSS Mixer"));
+    setWindowIcon(QIcon(":/icons/osso.png"));
     init();
+    create_systray_actions();
+    create_systray_icon();
+    trayIcon->show();
 }
 
 Mixer::~Mixer()
@@ -112,7 +116,7 @@ void Mixer::init()
     master_group = new QGroupBox(tr("Master"), this);
     master_group_layout = new QHBoxLayout();
     master_group->setLayout(master_group_layout);
-    
+
     sections_group = new QGroupBox(tr("Sections"), this);
     sections_group_layout = new QVBoxLayout();
     sections_group->setLayout(sections_group_layout);
@@ -121,6 +125,7 @@ void Mixer::init()
     info_group_layout = new QVBoxLayout();
     info_group->setLayout(info_group_layout);
     QPushButton *info_but = new QPushButton(this);
+    info_but->setIcon(QIcon(":/icons/info.png"));
     info_but->setText(tr("Info"));
     connect(info_but, SIGNAL(clicked()), info_dlg, SLOT(show()));
     info_group_layout->addWidget(info_but);
@@ -146,6 +151,7 @@ void Mixer::init()
             Group *parent = dynamic_cast <Group *>(iter.value());
             QBoxLayout *group_layout = parent->get_layout();
             QPushButton *section_but = new QPushButton(this);
+            section_but->setIcon(QIcon(":/icons/audio.png"));
             section_but->setText(extension_list.value(iter.key())->get_id());
             connect(section_but, SIGNAL(clicked()), parent, SLOT(show()));
             sections_group_layout->addWidget(section_but);
@@ -184,3 +190,42 @@ void Mixer::init()
     }
 }
 
+void Mixer::create_systray_icon()
+{
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->setIcon(QIcon(":/icons/osso.png"));
+    trayIcon->setToolTip(tr("Osso - Qt4 OSS Mixer"));
+}
+
+void Mixer::create_systray_actions()
+{
+    minimizeAction = new QAction(QIcon(":/icons/restore.png"), tr("Mi&nimize"), this);
+    connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
+
+    restoreAction = new QAction(QIcon(":/icons/restore.png"), tr("&Restore"), this);
+    connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
+
+    quitAction = new QAction(QIcon(":/icons/quit.png"), tr("&Quit"), this);
+    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+}
+
+void Mixer::closeEvent(QCloseEvent *event)
+{
+    if (trayIcon->isVisible())
+    {
+        QMessageBox::information(this, tr("Systray"),
+                                 tr("The program will keep running in the "
+                                    "System Tray. To terminate the program, "
+                                    "choose <b>Quit</b> in the context menu "
+                                    "of the System Tray entry."));
+        hide();
+        event->ignore();
+    }
+}

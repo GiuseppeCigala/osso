@@ -12,6 +12,7 @@ Info::Info(Device *d, QWidget * parent) : QGroupBox(parent)
 {
     dev = d;
     setWindowTitle(tr("Info"));
+    setWindowIcon(QIcon(":/icons/info.png"));
     init();
 }
 
@@ -21,8 +22,7 @@ Info::~Info()
 void Info::init()
 {
     QGridLayout *layout = new QGridLayout();
-    layout->setAlignment(Qt::AlignCenter);
-    layout->setSpacing(5);
+    layout->setColumnMinimumWidth(1, 200),
     setLayout(layout);
     QMap <QString, QString> sys_info = dev->get_system_info();
     QMapIterator <QString, QString> iter(sys_info);
@@ -37,7 +37,7 @@ void Info::init()
         lab->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
         QLineEdit *info = new QLineEdit(this);
         info->setReadOnly(true);
-
+        
         lab->setText(iter.key());
         info->setText(iter.value());
         layout->addWidget(lab, i, 0);

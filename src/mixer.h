@@ -18,17 +18,20 @@
 
 ////////////////////////////////////////
 
-class Mixer : public QDialog
+class Mixer : public QFrame
 {
     Q_OBJECT
-    
+
 public:
     Mixer(QWidget * parent = 0);
     ~Mixer();
     void init();
-    
+    void create_systray_actions();
+    void create_systray_icon();
+
 private slots:
-    
+    void closeEvent(QCloseEvent *);
+
 private:
     Device *dev;
     QGridLayout *main_layout;
@@ -40,7 +43,11 @@ private:
     QVBoxLayout *info_group_layout;
     QHash <int, QWidget *> control_list;
     QHash <int, Extension *> extension_list;
+    QAction *minimizeAction;
+    QAction *restoreAction;
+    QAction *quitAction;
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
 };
-
 
 #endif
