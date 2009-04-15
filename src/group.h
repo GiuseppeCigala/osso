@@ -21,7 +21,7 @@ public:
     ~Group();
     void init();
     QBoxLayout * get_layout();
-    QStringList get_flags();
+    QStringList get_flags() const;
 
 private slots:
 

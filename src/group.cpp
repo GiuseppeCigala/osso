@@ -18,6 +18,8 @@ Group::Group(Extension *ex, QWidget * parent) : QGroupBox(parent)
 
 Group::~Group()
 {
+    delete layout;
+    delete ext;
 }
 
 void Group::init()
@@ -33,7 +35,7 @@ QBoxLayout * Group::get_layout()
     return layout;
 }
 
-QStringList Group::get_flags()
+QStringList Group::get_flags() const
 {
     return ext->get_flags();
 }

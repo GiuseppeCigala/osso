@@ -18,7 +18,9 @@ Enum::Enum(Extension *ex, QWidget * parent) : QFrame(parent)
 }
 
 Enum::~Enum()
-{}
+{
+    delete ext;
+}
 
 void Enum::init()
 {
@@ -38,7 +40,7 @@ void Enum::init()
 void Enum::read_entry()
 {
     QStringList entry_list = ext->get_entry_list();
-    
+
     for (int i = 0; i < entry_list.size(); ++i)
     {
         combo->addItem(entry_list.at(i));

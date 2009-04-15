@@ -12,12 +12,14 @@ Info::Info(Device *d, QWidget * parent) : QGroupBox(parent)
 {
     dev = d;
     setWindowTitle(tr("Info"));
-    setWindowIcon(QIcon(":/icons/info.png"));
+    setWindowIcon(QIcon(":/icons/card.png"));
     init();
 }
 
 Info::~Info()
-{}
+{
+    delete dev;
+}
 
 void Info::init()
 {
@@ -37,7 +39,7 @@ void Info::init()
         lab->setFrameStyle(QFrame::StyledPanel | QFrame::Sunken);
         QLineEdit *info = new QLineEdit(this);
         info->setReadOnly(true);
-        
+
         lab->setText(iter.key());
         info->setText(iter.value());
         layout->addWidget(lab, i, 0);

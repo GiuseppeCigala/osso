@@ -1,1 +1,36 @@
-Qt4 OSS Mixer
+***********
+FEATURES
+***********
+Qt4 OSS 4.1 Mixer
+System Tray support
+Tested only on ArchLinux with Realtek ALC880 audio card
+
+See CHANGELOG ...
+
+***********
+REPOSITORY
+***********
+http://github.com/antico/osso/tree/master
+
+***********
+DOWNLOAD
+***********
+- on first installation: "git clone git://github.com/antico/osso.git"
+- to update your local repository: "git pull"
+
+*************
+INSTALLATION
+*************
+To compile, enter in "Osso" dir (where is the osso.pro) and type on shell:
+"qmake" (or qmake-qt4)
+"make"
+---------------------------------------------------
+To install, type on shell (as root):
+"sh install"
+---------------------------------------------------
+To uninstall, type on shell (as root):
+"sh uninstall"
+---------------------------------------------------
+To hide debug messages, uncomment in osso.pro
+//DEFINES = QT_NO_DEBUG_OUTPUT
+---------------------------------------------------

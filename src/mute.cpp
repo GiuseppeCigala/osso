@@ -18,7 +18,9 @@ Mute::Mute(Extension *ex, QWidget * parent) : QFrame(parent)
 }
 
 Mute::~Mute()
-{}
+{
+    delete ext;
+}
 
 void Mute::init()
 {
@@ -39,7 +41,7 @@ void Mute::init()
 
 void Mute::set_state()
 {
-    if(state == 1) // 0 = off, 1 = on
+    if (state == 1) // 0 = off, 1 = on
     {
         mute->setText("OFF");
         mute->setColorText(Qt::green);
@@ -47,7 +49,7 @@ void Mute::set_state()
         ext->set_act_value(0);
         return;
     }
-    if(state == 0) 
+    if (state == 0)
     {
         mute->setText("ON");
         mute->setColorText(Qt::red);

@@ -18,7 +18,9 @@ Onoff::Onoff(Extension *ex, QWidget * parent) : QFrame(parent)
 }
 
 Onoff::~Onoff()
-{}
+{
+    delete ext;
+}
 
 void Onoff::init()
 {

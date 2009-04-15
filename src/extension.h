@@ -26,11 +26,11 @@ public:
     int get_right_value();
     int get_ctrl();
     int get_parent();
-    QStringList get_flags();
-    QStringList get_entry_list(); 
-    QString get_id();
-    QString get_extname();
-    QString get_type();
+    QStringList get_flags() const;
+    QStringList get_entry_list() const; 
+    QString get_id() const;
+    QString get_extname() const;
+    QString get_type() const;
     QList <int> get_childs();
     void set_shift(int);
     void set_value_mask(int);

@@ -11,7 +11,7 @@
 
 Mixer::Mixer(QWidget * parent) : QFrame(parent)
 {
-    setWindowTitle(tr("Osso - Qt4 OSS Mixer"));
+    setWindowTitle(tr("Osso - OSS 4.1 Mixer"));
     setWindowIcon(QIcon(":/icons/osso.png"));
     init();
     create_systray_actions();
@@ -125,7 +125,7 @@ void Mixer::init()
     info_group_layout = new QVBoxLayout();
     info_group->setLayout(info_group_layout);
     QPushButton *info_but = new QPushButton(this);
-    info_but->setIcon(QIcon(":/icons/info.png"));
+    info_but->setIcon(QIcon(":/icons/card.png"));
     info_but->setText(tr("Info"));
     connect(info_but, SIGNAL(clicked()), info_dlg, SLOT(show()));
     info_group_layout->addWidget(info_but);
@@ -201,15 +201,15 @@ void Mixer::create_systray_icon()
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setIcon(QIcon(":/icons/osso.png"));
-    trayIcon->setToolTip(tr("Osso - Qt4 OSS Mixer"));
+    trayIcon->setToolTip(tr("Osso - OSS 4.1 Mixer"));
 }
 
 void Mixer::create_systray_actions()
 {
-    minimizeAction = new QAction(QIcon(":/icons/restore.png"), tr("Mi&nimize"), this);
+    minimizeAction = new QAction(QIcon(":/icons/minimize.png"), tr("Mi&nimize"), this);
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
 
-    restoreAction = new QAction(QIcon(":/icons/restore.png"), tr("&Restore"), this);
+    restoreAction = new QAction(QIcon(":/icons/restore.png"), tr("&Show"), this);
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
 
     quitAction = new QAction(QIcon(":/icons/quit.png"), tr("&Quit"), this);
@@ -220,11 +220,14 @@ void Mixer::closeEvent(QCloseEvent *event)
 {
     if (trayIcon->isVisible())
     {
-        QMessageBox::information(this, tr("Systray"),
-                                 tr("The program will keep running in the "
-                                    "System Tray. To terminate the program, "
-                                    "choose <b>Quit</b> in the context menu "
-                                    "of the System Tray entry."));
+        QMessageBox msgBox;
+        msgBox.setWindowTitle(tr("System Tray"));
+        msgBox.setWindowIcon(QIcon(":/icons/osso.png"));
+        msgBox.setText(tr("The program will keep running in the System Tray."));
+        msgBox.setInformativeText(tr("To terminate the program, choose <b>Quit</b> in the context menu "
+                                     "of the System Tray entry."));
+        msgBox.setIconPixmap(QPixmap(":/icons/information.png"));
+        msgBox.exec();
         hide();
         event->ignore();
     }

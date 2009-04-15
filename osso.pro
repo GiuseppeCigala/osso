@@ -33,3 +33,4 @@ QMAKE_CLEAN += osso
 TEMPLATE = app
 CONFIG += warn_on release
 RESOURCES += osso.qrc
+//DEFINES = QT_NO_DEBUG_OUTPUT

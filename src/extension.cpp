@@ -176,7 +176,7 @@ int Extension::get_max_value()
     return ext.maxvalue;
 }
 
-QStringList Extension::get_entry_list() // for MIXT_ENUM
+QStringList Extension::get_entry_list() const // for MIXT_ENUM
 {
     QStringList entry_list;
 
@@ -207,12 +207,12 @@ int Extension::get_ctrl()
     return ext.ctrl;
 }
 
-QString Extension::get_extname()
+QString Extension::get_extname() const
 {
     return ext.extname;
 }
 
-QString Extension::get_id()
+QString Extension::get_id() const
 {
     return ext.id;
 }
@@ -222,7 +222,7 @@ int Extension::get_parent()
     return ext.parent;
 }
 
-QStringList Extension::get_flags()
+QStringList Extension::get_flags() const
 {
     QStringList flags;
 
@@ -264,7 +264,7 @@ QStringList Extension::get_flags()
     return flags;
 }
 
-QString Extension::get_type()
+QString Extension::get_type() const
 {
     return type;
 }

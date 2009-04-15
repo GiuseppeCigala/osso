@@ -66,7 +66,7 @@ int Device::get_mixer_dev(int mixer_fd)
         }
         if (errno == EINVAL)
         {
-            qCritical() << "Error: OSS version 4.0 or later is required.\n";
+            qCritical() << "Error: OSS version 4.1 or later is required.\n";
             exit (-1);
         }
     }

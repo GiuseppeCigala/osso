@@ -18,7 +18,9 @@ Peak::Peak(Extension *ex, QString ty, QWidget * parent) : QFrame(parent)
 }
 
 Peak::~Peak()
-{}
+{
+    delete ext;
+}
 
 void Peak::init()
 {
@@ -30,7 +32,7 @@ void Peak::init()
     QLabel *id_lab = new QLabel(this);
     id_lab->setText(ext->get_id());
     id_lab->setAlignment(Qt::AlignCenter);
-    
+
     if (type == "mono")
     {
         mono_vu = new VUMeter(this);
