@@ -28,9 +28,7 @@ void Enum::init()
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(5);
     setLayout(layout);
-    QLabel *id_lab = new QLabel(this);
-    id_lab->setText(ext->get_id());
-    id_lab->setAlignment(Qt::AlignCenter);
+    QLabel *id_lab = new QLabel(ext->get_id(), this);
     combo = new QComboBox(this);
     layout->addWidget(id_lab, 0, 0, Qt::AlignCenter);
     layout->addWidget(combo, 1, 0, Qt::AlignCenter);

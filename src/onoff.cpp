@@ -28,9 +28,7 @@ void Onoff::init()
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(5);
     setLayout(layout);
-    QLabel *id_lab = new QLabel(this);
-    id_lab->setText(ext->get_id());
-    id_lab->setAlignment(Qt::AlignCenter);
+    QLabel *id_lab = new QLabel(ext->get_id(), this);
     onoff = new Push(this);
     onoff->setText("OFF");
     onoff->setColorText(Qt::red);

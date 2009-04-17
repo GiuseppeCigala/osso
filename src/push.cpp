@@ -24,20 +24,22 @@ void Push::init()
     colText = Qt::black;
 }
 
-
 void Push::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     painter.setWindow(0, 0, 200, 100);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(QColor(60, 60, 60), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-    paintBorder(painter);
-    paintButton(painter);
-    paintText(painter);
+    paintBorder();
+    paintButton();
+    paintText();
 }
 
-void Push::paintBorder(QPainter &painter)
+void Push::paintBorder()
 {
+    QPainter painter(this);
+    painter.setWindow(0, 0, 200, 100);
+    painter.setRenderHint(QPainter::Antialiasing);
     QLinearGradient linGrad(5, 100, 100, 80);
     linGrad.setColorAt(0, Qt::gray);
     linGrad.setColorAt(1, QColor(200, 200, 200));
@@ -47,8 +49,12 @@ void Push::paintBorder(QPainter &painter)
     painter.drawRoundRect(border, 10, 3);
 }
 
-void Push::paintButton(QPainter &painter)
+void Push::paintButton()
 {
+    QPainter painter(this);
+    painter.setWindow(0, 0, 200, 100);
+    painter.setRenderHint(QPainter::Antialiasing);
+    
     if (pushed == false)
     {
         painter.setBrush(QColor(100, 100, 100));
@@ -71,8 +77,12 @@ void Push::paintButton(QPainter &painter)
     }
 }
 
-void Push::paintText(QPainter &painter)
+void Push::paintText()
 {
+    QPainter painter(this);
+    painter.setWindow(0, 0, 200, 100);
+    painter.setRenderHint(QPainter::Antialiasing);
+    
     if (pushed == false)
     {
         QRectF text(5, 5, 190, 90);

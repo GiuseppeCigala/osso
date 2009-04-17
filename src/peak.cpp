@@ -24,15 +24,13 @@ Peak::~Peak()
 
 void Peak::init()
 {
-    timer = new QTimer(this);
+    timer = new QTimer(this); // to update the value
     QGridLayout *layout = new QGridLayout();
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(5);
     setLayout(layout);
-    QLabel *id_lab = new QLabel(this);
-    id_lab->setText(ext->get_id());
-    id_lab->setAlignment(Qt::AlignCenter);
-
+    QLabel *id_lab = new QLabel(ext->get_id(), this);
+        
     if (type == "mono")
     {
         mono_vu = new VUMeter(this);

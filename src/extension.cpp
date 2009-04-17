@@ -222,6 +222,16 @@ int Extension::get_parent()
     return ext.parent;
 }
 
+int Extension::get_mixer_dev()
+{
+    return dev;
+}
+
+int Extension::get_mixer_fd()
+{
+    return mix_fd;
+}
+
 QStringList Extension::get_flags() const
 {
     QStringList flags;

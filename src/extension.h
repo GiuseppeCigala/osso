@@ -26,6 +26,8 @@ public:
     int get_right_value();
     int get_ctrl();
     int get_parent();
+    int get_mixer_dev();
+    int get_mixer_fd();
     QStringList get_flags() const;
     QStringList get_entry_list() const; 
     QString get_id() const;

@@ -48,9 +48,9 @@ protected:
     void mousePressEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
     void init();
-    void paintBorder(QPainter &);
-    void paintButton(QPainter &);
-    void paintText(QPainter &);
+    void paintBorder();
+    void paintButton();
+    void paintText();
 
 private:
     bool pushed;

@@ -27,6 +27,9 @@ Cursor::~Cursor()
 
 void Cursor::paintEvent(QPaintEvent *)
 {
+    QPainter painter(this);
+    painter.setWindow(0, 0, 100, 550);
+    painter.setRenderHint(QPainter::Antialiasing);
     paintBorder();
     paintCursor();
     paintScale();

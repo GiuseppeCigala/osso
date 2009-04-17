@@ -27,11 +27,13 @@ private slots:
     void set_mono_volume(int);
     void set_left_volume(int);
     void set_right_volume(int);
+    void update_label();
 
 private:
     Extension *ext;
     QString type;
-
+    QTimer *timer;
+    QLabel *id_lab;
 };
 #endif
 
