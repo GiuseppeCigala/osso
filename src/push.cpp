@@ -46,7 +46,7 @@ void Push::paintBorder()
     linGrad.setSpread(QGradient::ReflectSpread);
     painter.setBrush(linGrad);
     QRectF border(5, 5, 190, 90);
-    painter.drawRoundRect(border, 10, 3);
+    painter.drawRoundRect(border, 15, 15);
 }
 
 void Push::paintButton()
