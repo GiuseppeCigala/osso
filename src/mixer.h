@@ -37,10 +37,8 @@ private:
     QGridLayout *main_layout;
     QGroupBox *master_group;
     QGroupBox *sections_group;
-    QGroupBox *info_group;
     QHBoxLayout *master_group_layout;
     QVBoxLayout *sections_group_layout;
-    QVBoxLayout *info_group_layout;
     QHash <int, QWidget *> control_list;
     QHash <int, Extension *> extension_list;
     QAction *minimizeAction;

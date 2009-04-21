@@ -121,18 +121,24 @@ void Mixer::init()
     sections_group_layout = new QVBoxLayout();
     sections_group->setLayout(sections_group_layout);
 
-    info_group = new QGroupBox(tr("Info"), this);
-    info_group_layout = new QVBoxLayout();
+    QGroupBox *info_group = new QGroupBox(tr("Info"), this);
+    QVBoxLayout *info_group_layout = new QVBoxLayout();
     info_group->setLayout(info_group_layout);
     QPushButton *info_but = new QPushButton(this);
     info_but->setIcon(QIcon(":/icons/card.png"));
     info_but->setText(tr("Info"));
     connect(info_but, SIGNAL(clicked()), info_dlg, SLOT(show()));
     info_group_layout->addWidget(info_but);
+    
+    QPushButton *quit_but = new QPushButton(this);
+    quit_but->setIcon(QIcon(":/icons/quit.png"));
+    quit_but->setText(tr("Quit"));
+    connect(quit_but, SIGNAL(clicked()), this, SLOT(close()));
 
     main_layout->addWidget(master_group, 0, 0, 0, 1);
     main_layout->addWidget(sections_group, 0, 1);
     main_layout->addWidget(info_group, 1, 1);
+    main_layout->addWidget(quit_but, 2, 1);
 
     /// merge the childs to respective parent ///
     QHashIterator<int, QWidget *> iter(control_list);
