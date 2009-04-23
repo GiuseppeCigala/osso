@@ -22,9 +22,12 @@
 #include <QMouseEvent>
 #include <QTimer>
 #include <QLineEdit>
+#include <QTextEdit>
 #include <QSystemTrayIcon>
 #include <QMessageBox>
 #include <QMenu>
+#include <QTableWidget>
+#include <QTableWidgetItem>
 
 #include <fcntl.h>
 #include <errno.h>

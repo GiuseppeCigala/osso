@@ -99,7 +99,7 @@ QHash <int, Extension *> Device::get_extensions()
     return ext_list;
 }
 
-QMap <QString, QString> Device::get_system_info()
+QMap <QString, QStringList> Device::get_system_info()
 {
     oss_sysinfo sysinfo;
     oss_mixerinfo mi;
@@ -129,14 +129,65 @@ QMap <QString, QString> Device::get_system_info()
             exit (-1);
         }
     }
-    system_info.insert(tr("1. Mixer device:"), QString("%1").arg(mi.name));
-    system_info.insert(tr("2. Product:"), QString("%1").arg(sysinfo.product));
-    system_info.insert(tr("3. Version:"), QString("%1").arg(sysinfo.version));
-    system_info.insert(tr("4. Version num:"),QString("%1").arg(sysinfo.versionnum));
-    system_info.insert(tr("5. License:"), QString("%1").arg(sysinfo.license));
-    system_info.insert(tr("6. Audio Device files:"), QString("%1").arg(sysinfo.numaudios));
-    system_info.insert(tr("7. Audio Engines:"), QString("%1").arg(sysinfo.numaudioengines));
-    system_info.insert(tr("8. Sound Cards:"), QString("%1").arg(sysinfo.numcards));
+    system_info.insert(tr("1. Mixer device:"), QStringList(QString("%1").arg(mi.name)));
+    system_info.insert(tr("2. Product:"), QStringList(QString("%1").arg(sysinfo.product)));
+    system_info.insert(tr("3. Version:"), QStringList(QString("%1").arg(sysinfo.version)));
+    system_info.insert(tr("4. Version num:"), QStringList(QString("%1").arg(sysinfo.versionnum)));
+    system_info.insert(tr("5. License:"), QStringList(QString("%1").arg(sysinfo.license)));
+
+    // get audio device files
+    QStringList audio_devices;
+    int n = sysinfo.numaudios;
+
+    for (int i = 0; i < n; i++)
+    {
+        oss_audioinfo ainfo;
+        ainfo.dev = i;
+
+        if (ioctl (mixer_fd, SNDCTL_AUDIOINFO, &ainfo) == -1)
+        {
+            qCritical() << "Can't get device info for /dev/dsp:" << i << "\n";
+            continue;
+        }
+        audio_devices << QString(ainfo.name).append(",").append(ainfo.devnode);
+    }
+    system_info.insert(tr("6. Audio Device files:"), audio_devices);
+
+    // get audio engines
+    QStringList audio_engines;
+    n = sysinfo.numaudioengines;
+
+    for (int i = 0; i < n; i++)
+    {
+        oss_audioinfo ainfo;
+        ainfo.dev = i;
+
+        if (ioctl (mixer_fd, SNDCTL_ENGINEINFO, &ainfo) == -1)
+        {
+            qCritical() << "Can't get device info for /dev/dsp:" << i << "\n";
+            continue;
+        }
+        audio_engines << QString(ainfo.name).append(",").append(ainfo.devnode);
+    }
+    system_info.insert(tr("7. Audio Engines:"), audio_engines);
+
+    // get sound cards
+    QStringList sound_cards;
+    n = sysinfo.numcards;
+
+    for (int i = 0; i < sysinfo.numcards; i++)
+    {
+        oss_card_info cinfo;
+        cinfo.card = i;
+
+        if (ioctl (mixer_fd, SNDCTL_CARDINFO, &cinfo) == -1)
+        {
+            qCritical() << "SNDCTL_CARDINFO Error \n";
+            exit (-1);
+        }
+        sound_cards << QString(cinfo.shortname).append(",").append(cinfo.longname);
+    }
+    system_info.insert(tr("8. Sound Cards:"), sound_cards);
 
     return system_info;
 }

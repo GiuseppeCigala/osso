@@ -24,13 +24,13 @@ public:
     int get_mixer_dev(int);
     void create_extensions(int, int);
     QHash <int, Extension *> get_extensions();
-    QMap <QString, QString> get_system_info();
+    QMap <QString, QStringList> get_system_info();
    
 private slots:
 
 private:
     QHash <int, Extension *> ext_list;
-    QMap <QString, QString> system_info;
+    QMap <QString, QStringList> system_info;
 
 };
 #endif
