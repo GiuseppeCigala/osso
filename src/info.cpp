@@ -45,7 +45,7 @@ void Info::init()
             info_table->setColumnCount(2);
             info_table->setRowCount(iter.value().size());
             QStringList header;
-            header << tr("Name") << tr("Node");
+            header << tr("Name") << tr("Device");
             info_table->setHorizontalHeaderLabels(header);
             info_table->setAlternatingRowColors(true);
             info_table->setMaximumHeight(iter.value().size() * (fontMetrics().height()) + 60);
@@ -78,8 +78,13 @@ void Info::init()
             layout->addWidget(lab, i, 0);
             layout->addWidget(info, i, 1);
         }
-
         i++;
     }
+    
+    QDialogButtonBox *close_box = new QDialogButtonBox(this);
+    QPushButton *close = new QPushButton(QIcon(":/icons/close.png"), tr("Close"), this);
+    close_box->addButton(close, QDialogButtonBox::AcceptRole);
+    connect(close_box, SIGNAL(accepted()), this, SLOT(close()));
+    layout->addWidget(close_box, i, 1);
 }
 

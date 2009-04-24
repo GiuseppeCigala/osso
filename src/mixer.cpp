@@ -129,7 +129,7 @@ void Mixer::init()
     info_but->setText(tr("Info"));
     connect(info_but, SIGNAL(clicked()), info_dlg, SLOT(show()));
     info_group_layout->addWidget(info_but);
-    
+
     QPushButton *quit_but = new QPushButton(this);
     quit_but->setIcon(QIcon(":/icons/quit.png"));
     quit_but->setText(tr("Quit"));
@@ -229,12 +229,23 @@ void Mixer::closeEvent(QCloseEvent *event)
         QMessageBox msgBox;
         msgBox.setWindowTitle(tr("System Tray"));
         msgBox.setWindowIcon(QIcon(":/icons/osso.png"));
-        msgBox.setText(tr("The program will keep running in the System Tray."));
-        msgBox.setInformativeText(tr("To terminate the program, choose <b>Quit</b> in the context menu "
-                                     "of the System Tray entry."));
-        msgBox.setIconPixmap(QPixmap(":/icons/information.png"));
-        msgBox.exec();
-        hide();
-        event->ignore();
+        QPushButton *ok_but = new QPushButton(QIcon(":/icons/ok.png"), tr("Ok"), this);
+        QPushButton *cancel_but = new QPushButton(QIcon(":/icons/cancel.png"), tr("Cancel"), this);
+        msgBox.addButton(ok_but, QMessageBox::AcceptRole);
+        msgBox.addButton(cancel_but, QMessageBox::RejectRole);
+        msgBox.setText(tr("Do you want quit from <b>Osso</b>?"));
+        msgBox.setIconPixmap(QPixmap(":/icons/question.png"));
+
+        int ret = msgBox.exec();
+
+        if (ret == QMessageBox::AcceptRole) // ok
+        {
+            qApp->quit();
+        }
+        else // cancel
+        {
+            hide();
+            event->ignore();
+        }
     }
 }

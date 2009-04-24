@@ -6,6 +6,10 @@
    <file>icons/restore.png</file>
    <file>icons/minimize.png</file>
    <file>icons/quit.png</file>
+   <file>icons/ok.png</file>
+   <file>icons/cancel.png</file>
+   <file>icons/close.png</file>
    <file>icons/information.png</file>
+   <file>icons/question.png</file>
 </qresource>
 </RCC>

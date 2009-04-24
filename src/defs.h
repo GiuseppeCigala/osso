@@ -28,6 +28,7 @@
 #include <QMenu>
 #include <QTableWidget>
 #include <QTableWidgetItem>
+#include <QDialogButtonBox>
 
 #include <fcntl.h>
 #include <errno.h>
