@@ -14,26 +14,34 @@ Mixer::Mixer(QWidget * parent) : QFrame(parent)
     setWindowTitle(tr("Osso - OSS 4.1 Mixer"));
     setWindowIcon(QIcon(":/icons/osso.png"));
     init();
+    set_childs();
+    create_controls();
+    create_containers();
+    merge_childs();
     create_systray_actions();
     create_systray_icon();
     trayIcon->show();
 }
 
 Mixer::~Mixer()
-{}
+{
+    delete info_dlg;
+}
 
 void Mixer::init()
 {
     main_layout = new QGridLayout();
     setLayout(main_layout);
-
     // open the mixer device and get the extensions
     dev = new Device(this);
     extension_list = dev->get_extensions();
     // to get system information
-    Info *info_dlg = new Info(dev);
+    info_dlg = new Info(dev);
+}
 
-    /// check childs for respective parents ///
+/// check childs for respective parent ///
+void Mixer::set_childs()
+{
     foreach(Extension *child, extension_list)
     {
         Extension *ex;
@@ -45,14 +53,18 @@ void Mixer::init()
             ex->set_child(child->get_ctrl());
         }
     }
-    foreach(Extension *ex, extension_list)
+
+    foreach(Extension *ex, extension_list) // print extension info
     {
-        qDebug() << "Extension:" << ex->get_ctrl() << "Parent:" << ex->get_parent() << "Childs:" << ex->get_childs() <<
+        qDebug() << "<b>Extension:</b>" << ex->get_ctrl() << "\nParent:" << ex->get_parent() << "Childs:" << ex->get_childs() <<
         "Id:" << ex->get_id() << "Extname:" << ex->get_extname() << "Min:" << ex->get_min_value() << "Max:" << ex->get_max_value() <<
         "Act:" << ex->get_act_value() << "Flags:" << ex->get_flags() << "Type:" << ex->get_type();
     }
+}
 
-    /// create the mixer controls ///
+/// create the mixer controls ///
+void Mixer::create_controls()
+{
     foreach(Extension *ex, extension_list)
     {
         if (ex->get_type() == "MIXT_MONOSLIDER16")
@@ -111,8 +123,11 @@ void Mixer::init()
             qDebug() << "Add ctrl:" << ex->get_ctrl() << "Childs:" << ex->get_childs();
         }
     }
+}
 
-    /// create the main containers ///
+/// create the main containers ///
+void Mixer::create_containers()
+{
     master_group = new QGroupBox(tr("Master"), this);
     master_group_layout = new QHBoxLayout();
     master_group->setLayout(master_group_layout);
@@ -139,8 +154,11 @@ void Mixer::init()
     main_layout->addWidget(sections_group, 0, 1);
     main_layout->addWidget(info_group, 1, 1);
     main_layout->addWidget(quit_but, 2, 1);
+}
 
-    /// merge the childs to respective parent ///
+/// merge the childs to respective parent ///
+void Mixer::merge_childs()
+{
     QHashIterator<int, QWidget *> iter(control_list);
 
     while (iter.hasNext())
@@ -212,13 +230,13 @@ void Mixer::create_systray_icon()
 
 void Mixer::create_systray_actions()
 {
-    minimizeAction = new QAction(QIcon(":/icons/minimize.png"), tr("Mi&nimize"), this);
+    minimizeAction = new QAction(QIcon(":/icons/minimize.png"), tr("Minimize"), this);
     connect(minimizeAction, SIGNAL(triggered()), this, SLOT(hide()));
 
-    restoreAction = new QAction(QIcon(":/icons/restore.png"), tr("&Show"), this);
+    restoreAction = new QAction(QIcon(":/icons/restore.png"), tr("Show"), this);
     connect(restoreAction, SIGNAL(triggered()), this, SLOT(showNormal()));
 
-    quitAction = new QAction(QIcon(":/icons/quit.png"), tr("&Quit"), this);
+    quitAction = new QAction(QIcon(":/icons/quit.png"), tr("Quit"), this);
     connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
 }
 

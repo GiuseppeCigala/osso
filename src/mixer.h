@@ -15,6 +15,7 @@
 #include "mute.h"
 #include "onoff.h"
 #include "enum.h"
+#include "info.h"
 
 ////////////////////////////////////////
 
@@ -28,6 +29,10 @@ public:
     void init();
     void create_systray_actions();
     void create_systray_icon();
+    void set_childs();
+    void create_controls();
+    void create_containers();
+    void merge_childs();
 
 private slots:
     void closeEvent(QCloseEvent *);
@@ -46,6 +51,7 @@ private:
     QAction *quitAction;
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
+    Info *info_dlg;
 };
 
 #endif
