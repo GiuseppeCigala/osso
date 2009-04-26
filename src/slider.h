@@ -10,6 +10,7 @@
 #include "defs.h"
 #include "extension.h"
 #include "cursor.h"
+#include "jack.h"
 
 ///////////////////////////////////////
 

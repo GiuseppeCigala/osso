@@ -58,7 +58,7 @@ void Mixer::set_childs()
     {
         qDebug() << "<b>Extension:</b>" << ex->get_ctrl() << "\nParent:" << ex->get_parent() << "Childs:" << ex->get_childs() <<
         "Id:" << ex->get_id() << "Extname:" << ex->get_extname() << "Min:" << ex->get_min_value() << "Max:" << ex->get_max_value() <<
-        "Act:" << ex->get_act_value() << "Flags:" << ex->get_flags() << "Type:" << ex->get_type();
+        "Act:" << ex->get_act_value() << "Flags:" << ex->get_flags() << "Type:" << ex->get_type() << "Color:" << ex->get_color();
     }
 }
 

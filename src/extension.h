@@ -25,6 +25,7 @@ public:
     int get_left_value();
     int get_right_value();
     int get_ctrl();
+    QColor get_color();
     int get_parent();
     int get_mixer_dev();
     int get_mixer_fd();

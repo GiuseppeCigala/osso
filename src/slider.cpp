@@ -35,6 +35,8 @@ void Slider::init()
     layout->setSpacing(5);
     setLayout(layout);
     id_lab = new QLabel(ext->get_id(), this);
+    Jack *jack = new Jack();  // 3.5 mm jacks for audio input and outputs (pink=mic, etc)
+    jack->setColor(ext->get_color());
 
     if (type == "mono")
     {
@@ -42,8 +44,9 @@ void Slider::init()
         mono_cursor->setMinValue(ext->get_min_value());
         mono_cursor->setMaxValue(ext->get_max_value());
         mono_cursor->setActValue(ext->get_mono_value());
-        layout->addWidget(id_lab, 0, 0, Qt::AlignCenter);
-        layout->addWidget(mono_cursor, 1, 0, Qt::AlignCenter);
+        layout->addWidget(jack, 0, 0, Qt::AlignCenter);
+        layout->addWidget(id_lab, 1, 0, Qt::AlignCenter);
+        layout->addWidget(mono_cursor, 2, 0, Qt::AlignCenter);
         connect(mono_cursor, SIGNAL(valueChanged(int)), this, SLOT(set_mono_volume(int)));
     }
     if (type == "stereo")
@@ -56,9 +59,10 @@ void Slider::init()
         right_cursor->setMinValue(ext->get_min_value());
         right_cursor->setMaxValue(ext->get_max_value());
         right_cursor->setActValue(ext->get_right_value());
-        layout->addWidget(id_lab, 0, 0, 1, 0, Qt::AlignCenter);
-        layout->addWidget(left_cursor, 1, 0, Qt::AlignCenter);
-        layout->addWidget(right_cursor, 1, 1, Qt::AlignCenter);
+        layout->addWidget(jack, 0, 0, 1, 0, Qt::AlignCenter);
+        layout->addWidget(id_lab, 1, 0, 1, 0, Qt::AlignCenter);
+        layout->addWidget(left_cursor, 2, 0, Qt::AlignCenter);
+        layout->addWidget(right_cursor, 2, 1, Qt::AlignCenter);
         connect(left_cursor, SIGNAL(valueChanged(int)), this, SLOT(set_left_volume(int)));
         connect(right_cursor, SIGNAL(valueChanged(int)), this, SLOT(set_right_volume(int)));
     }

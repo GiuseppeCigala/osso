@@ -222,6 +222,16 @@ int Extension::get_parent()
     return ext.parent;
 }
 
+QColor Extension::get_color()
+{
+    int red = (ext.rgbcolor & 0xff0000) >> 8;
+    int green = (ext.rgbcolor & 0x00ff00);
+    int blue = (ext.rgbcolor & 0x0000ff) << 8;
+    int alpha = 255;
+    QColor col(red, green, blue, alpha);
+    return col;
+}
+
 int Extension::get_mixer_dev()
 {
     return dev;

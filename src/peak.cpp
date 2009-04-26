@@ -29,18 +29,23 @@ void Peak::init()
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(5);
     setLayout(layout);
+    QFrame *lab_frame = new QFrame(this);
+    QVBoxLayout *lab_layout = new QVBoxLayout();
+    lab_frame->setLayout(lab_layout);
     QLabel *id_lab = new QLabel(ext->get_id(), this);
-        
+    lab_layout->insertSpacing(0, 10);
+    lab_layout->addWidget(id_lab, Qt::AlignCenter);
+
     if (type == "mono")
     {
         mono_vu = new VUMeter(this);
         mono_vu->setMinValue(ext->get_min_value());
         mono_vu->setMaxValue(ext->get_max_value());
         mono_vu->setLabel("M");
-        layout->addWidget(id_lab, 0, 0, Qt::AlignCenter);
+        layout->addWidget(lab_frame, 0, 0, Qt::AlignCenter);
         layout->addWidget(mono_vu, 1, 0, Qt::AlignCenter);
         connect(timer, SIGNAL(timeout()), SLOT(mono_timeout()));
-        timer->start(500);  // signal every 500 ms
+        timer->start(50);  // signal every 50 ms
     }
     if (type == "stereo")
     {
@@ -52,11 +57,11 @@ void Peak::init()
         right_vu->setMaxValue(ext->get_max_value());
         left_vu->setLabel("L");
         right_vu->setLabel("R");
-        layout->addWidget(id_lab, 0, 0, 1, 0, Qt::AlignCenter);
+        layout->addWidget(lab_frame, 0, 0, 1, 0, Qt::AlignCenter);
         layout->addWidget(left_vu, 1, 0, Qt::AlignCenter);
         layout->addWidget(right_vu, 1, 1, Qt::AlignCenter);
         connect(timer, SIGNAL(timeout()), SLOT(stereo_timeout()));
-        timer->start(500);  // signal every 500 ms
+        timer->start(50);  // signal every 50 ms
     }
 }
 

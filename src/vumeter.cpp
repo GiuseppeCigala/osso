@@ -35,7 +35,7 @@ void VUMeter::paintBorder()
 {
     QPainter painter(this);
     painter.setWindow(0, 0, 50, 500);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::HighQualityAntialiasing);
     QColor light = Qt::gray;
     QColor dark = colBack.darker(180);
     painter.setPen(QPen(colBack, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -65,7 +65,7 @@ void VUMeter::paintBar()
 {
     QPainter painter(this);
     painter.setWindow(0, 0, 50, 500);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::HighQualityAntialiasing);
     QLinearGradient linGrad(25, 0, 25, 500);
     linGrad.setColorAt(0, colHigh);
     linGrad.setColorAt(1, colLow);
@@ -86,7 +86,7 @@ void VUMeter::paintValue()
 {
     QPainter painter(this);
     painter.setWindow(0, 0, 50, 500);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::TextAntialiasing);
     painter.setBrush(Qt::black);
     painter.drawRect(5, 10, 40, 35);
     painter.setPen(Qt::gray);

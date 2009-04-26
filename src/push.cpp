@@ -27,8 +27,6 @@ void Push::init()
 void Push::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    painter.setWindow(0, 0, 200, 100);
-    painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(QColor(60, 60, 60), 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     paintBorder();
     paintButton();
@@ -81,7 +79,7 @@ void Push::paintText()
 {
     QPainter painter(this);
     painter.setWindow(0, 0, 200, 100);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::TextAntialiasing);
     
     if (pushed == false)
     {

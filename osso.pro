@@ -11,7 +11,8 @@ SOURCES = src/main.cpp \
  src/peak.cpp \
  src/push.cpp \
  src/cursor.cpp \
- src/info.cpp
+ src/info.cpp \
+ src/jack.cpp
 HEADERS = src/defs.h \
  src/device.h \
  src/mixer.h \
@@ -25,7 +26,8 @@ HEADERS = src/defs.h \
  src/peak.h \
  src/push.h \
  src/cursor.h \
- src/info.h
+ src/info.h \
+ src/jack.h
 OBJECTS_DIR += build
 MOC_DIR += build
 QMAKE_INCDIR += /usr/include

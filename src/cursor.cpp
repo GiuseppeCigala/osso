@@ -27,9 +27,6 @@ Cursor::~Cursor()
 
 void Cursor::paintEvent(QPaintEvent *)
 {
-    QPainter painter(this);
-    painter.setWindow(0, 0, 100, 550);
-    painter.setRenderHint(QPainter::Antialiasing);
     paintBorder();
     paintCursor();
     paintScale();
@@ -40,7 +37,7 @@ void Cursor::paintBorder()
 {
     QPainter painter(this);
     painter.setWindow(0, 0, 100, 550);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::HighQualityAntialiasing);
     QColor light = Qt::white;
     QColor dark = colBack.darker(140);
     painter.setPen(QPen(colBack, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -235,7 +232,7 @@ void Cursor::paintValue()
 {
     QPainter painter(this);
     painter.setWindow(0, 0, 100, 550);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::TextAntialiasing);
     QLinearGradient linGrad(20, 500, 25, 500);
     linGrad.setColorAt(0, Qt::white);
     linGrad.setColorAt(1, Qt::black);
@@ -332,6 +329,21 @@ void Cursor::mouseMoveEvent(QMouseEvent *e)
             cy = (y/dy);
             update();
         }
+    }
+}
+
+void Cursor::wheelEvent(QWheelEvent *e)
+{
+    int rot = e->delta()/30;
+    cy = cy-rot;
+
+    if (cy >=26 && cy <=474)
+    {
+        update();
+    }
+    else
+    {
+        cy = cy+rot;
     }
 }
 
