@@ -67,12 +67,21 @@ void Peak::init()
 
 void Peak::mono_timeout()
 {
-    mono_vu->setActValue(ext->get_mono_value());
+    int value = ext->get_mono_value();
+    
+    if (value != 0) // update only if there's signal
+    {
+        mono_vu->setActValue(ext->get_mono_value());
+    }
 }
 
 void Peak::stereo_timeout()
 {
     int value = ext->get_act_value();
-    left_vu->setActValue(value & 0xff);
-    right_vu->setActValue((value >> 8) & 0xff);
+
+    if (value != 0) // update only if there's signal
+    {
+        left_vu->setActValue(value & 0xff);
+        right_vu->setActValue((value >> 8) & 0xff);
+    }
 }

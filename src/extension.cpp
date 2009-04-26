@@ -109,13 +109,13 @@ int Extension::get_act_value()
     val.timestamp = ext.timestamp;
     val.ctrl = ext.ctrl;
     val.value = 0;
-    int act_val = 0;
 
     if (ioctl (mix_fd, SNDCTL_MIX_READ, &val) != -1)
     {
-        act_val = val.value;
+        return val.value;
     }
-    return act_val;
+    else
+        return 0;
 }
 
 int Extension::get_mono_value()
@@ -125,13 +125,13 @@ int Extension::get_mono_value()
     val.timestamp = ext.timestamp;
     val.ctrl = ext.ctrl;
     val.value = 0;
-    int act_val = 0;
 
     if (ioctl (mix_fd, SNDCTL_MIX_READ, &val) != -1)
     {
-        act_val = val.value & value_mask;
+        return (val.value & value_mask);
     }
-    return act_val;
+    else
+        return 0;
 }
 
 int Extension::get_left_value()
@@ -141,13 +141,13 @@ int Extension::get_left_value()
     val.timestamp = ext.timestamp;
     val.ctrl = ext.ctrl;
     val.value = 0;
-    int act_val = 0;
 
     if (ioctl (mix_fd, SNDCTL_MIX_READ, &val) != -1)
     {
-        act_val = val.value & value_mask;
+        return (val.value & value_mask);
     }
-    return act_val;
+    else
+        return 0;
 }
 
 int Extension::get_right_value()
@@ -157,13 +157,13 @@ int Extension::get_right_value()
     val.timestamp = ext.timestamp;
     val.ctrl = ext.ctrl;
     val.value = 0;
-    int act_val = 0;
 
     if (ioctl (mix_fd, SNDCTL_MIX_READ, &val) != -1)
     {
-        act_val = (val.value >> shift) & value_mask;
+        return ((val.value >> shift) & value_mask);
     }
-    return act_val;
+    else
+        return 0;
 }
 
 int Extension::get_min_value()
