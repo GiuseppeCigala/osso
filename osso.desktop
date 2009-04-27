@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Osso
+Comment=Qt4 OSS 4.1 Mixer
+Exec=osso
+Icon=osso
+Terminal=false
+Type=Application
+Categories=AudioVideo;Audio;Mixer;
+

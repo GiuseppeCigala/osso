@@ -4,12 +4,20 @@ yellow='\e[0;33m'
 white='\e[0;37m'
 
 if [[ $EUID -ne 0 ]]; then
-   echo "This script must be run as root" 1>&2
+   echo -e "${green}This script must be run as ${yellow}root${white}" 1>&2
    exit 1
 fi
 
 if [ ! -e /usr/bin/osso ]; then
     cp osso /usr/bin/osso
+fi
+
+if [ ! -e /usr/share/applications/osso.desktop ]; then
+    cp osso.desktop /usr/share/applications/
+fi
+
+if [ ! -e /usr/share/pixmaps/osso.png ]; then
+    cp icons/osso.png /usr/share/pixmaps/
 fi
 
 echo -e "${white}***********************************************"
