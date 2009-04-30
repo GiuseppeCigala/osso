@@ -108,25 +108,25 @@ void VUMeter::setValueDim(int dim)
     update();
 }
 
-void VUMeter::setColorBg(QColor color)
+void VUMeter::setColorBg(const QColor &color)
 {
     colBack = color;
     update();
 }
 
-void VUMeter::setColorValue(QColor color)
+void VUMeter::setColorValue(const QColor &color)
 {
     colValue = color;
     update();
 }
 
-void VUMeter::setColorHigh(QColor color)
+void VUMeter::setColorHigh(const QColor &color)
 {
     colHigh = color;
     update();
 }
 
-void VUMeter::setColorLow(QColor color)
+void VUMeter::setColorLow(const QColor &color)
 {
     colLow = color;
     update();
@@ -181,7 +181,7 @@ void VUMeter::setMaxValue(int maxValue)
     }
 }
 
-void VUMeter::setLabel(QString lab)
+void VUMeter::setLabel(const QString &lab)
 {
     label = lab;
     update();

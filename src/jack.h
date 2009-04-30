@@ -24,7 +24,7 @@ public:
 signals:
 
 public slots:
-    void setColor(QColor);
+    void setColor(const QColor &);
 
 protected:
     void paintEvent(QPaintEvent *);

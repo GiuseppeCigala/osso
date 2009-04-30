@@ -102,7 +102,7 @@ void Extension::check_type()
     }
 }
 
-int Extension::get_act_value()
+int Extension::get_act_value() const
 {
     oss_mixer_value val;
     val.dev = dev;
@@ -118,7 +118,7 @@ int Extension::get_act_value()
         return 0;
 }
 
-int Extension::get_mono_value()
+int Extension::get_mono_value() const
 {
     oss_mixer_value val;
     val.dev = dev;
@@ -134,7 +134,7 @@ int Extension::get_mono_value()
         return 0;
 }
 
-int Extension::get_left_value()
+int Extension::get_left_value() const
 {
     oss_mixer_value val;
     val.dev = dev;
@@ -150,7 +150,7 @@ int Extension::get_left_value()
         return 0;
 }
 
-int Extension::get_right_value()
+int Extension::get_right_value() const
 {
     oss_mixer_value val;
     val.dev = dev;
@@ -166,12 +166,12 @@ int Extension::get_right_value()
         return 0;
 }
 
-int Extension::get_min_value()
+int Extension::get_min_value() const
 {
     return ext.minvalue;
 }
 
-int Extension::get_max_value()
+int Extension::get_max_value() const
 {
     return ext.maxvalue;
 }
@@ -202,7 +202,7 @@ QStringList Extension::get_entry_list() const // for MIXT_ENUM
     return entry_list;
 }
 
-int Extension::get_ctrl()
+int Extension::get_ctrl() const
 {
     return ext.ctrl;
 }
@@ -217,12 +217,12 @@ QString Extension::get_id() const
     return ext.id;
 }
 
-int Extension::get_parent()
+int Extension::get_parent() const
 {
     return ext.parent;
 }
 
-QColor Extension::get_color()
+QColor Extension::get_color() const
 {
     int red = (ext.rgbcolor & 0xff0000) >> 8;
     int green = (ext.rgbcolor & 0x00ff00);
@@ -232,12 +232,12 @@ QColor Extension::get_color()
     return col;
 }
 
-int Extension::get_mixer_dev()
+int Extension::get_mixer_dev() const
 {
     return dev;
 }
 
-int Extension::get_mixer_fd()
+int Extension::get_mixer_fd() const
 {
     return mix_fd;
 }
@@ -294,7 +294,7 @@ QList <int> Extension::get_childs()
     return childs;
 }
 
-void Extension::set_type(QString t)
+void Extension::set_type(const QString &t)
 {
     type = t;
 }

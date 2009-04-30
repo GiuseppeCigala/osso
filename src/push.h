@@ -39,9 +39,9 @@ signals:
     void released();
 
 public slots:
-    void setText(QString);
-    void setFont(QFont);
-    void setColorText(QColor);
+    void setText(const QString &);
+    void setFont(const QFont &);
+    void setColorText(const QColor &);
 
 protected:
     void paintEvent(QPaintEvent *);

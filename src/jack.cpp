@@ -48,12 +48,12 @@ void Jack::paintEvent(QPaintEvent *)
     painter.setBrush(col);
     QRect border(15, 15, 70, 70);
     painter.drawEllipse(border);
-    painter.setBrush(QColor(125, 125, 125));
+    painter.setBrush(QColor(60, 60, 60));
     QRect pin(32, 32, 36, 36);
     painter.drawEllipse(pin);
 }
 
-void Jack::setColor(QColor color)
+void Jack::setColor(const QColor &color)
 {
     col = color;
     update();

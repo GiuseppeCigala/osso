@@ -55,9 +55,9 @@ signals:
     void valueChanged(int);
 
 public slots:
-    void setColorBg(QColor);
-    void setColorScale(QColor);
-    void setColorValue(QColor);
+    void setColorBg(const QColor &);
+    void setColorScale(const QColor &);
+    void setColorValue(const QColor &);
     void setValueDim(int);
     void setScaleDim(int);
     void setMinValue(int);

@@ -57,12 +57,12 @@ public:
 signals:
 
 public slots:
-    void setColorBg(QColor);
-    void setColorValue(QColor);
-    void setColorHigh(QColor);
-    void setColorLow(QColor);
+    void setColorBg(const QColor &);
+    void setColorValue(const QColor &);
+    void setColorHigh(const QColor &);
+    void setColorLow(const QColor &);
     void setValueDim(int);
-    void setLabel(QString);
+    void setLabel(const QString &);
     void setActValue(int);
     void setMinValue(int);
     void setMaxValue(int);

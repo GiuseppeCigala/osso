@@ -359,19 +359,19 @@ void Cursor::setValueDim(int valueDim)
     update();
 }
 
-void Cursor::setColorBg(QColor colorBg)
+void Cursor::setColorBg(const QColor &colorBg)
 {
     colBack = colorBg;
     update();
 }
 
-void Cursor::setColorValue(QColor colorValue)
+void Cursor::setColorValue(const QColor &colorValue)
 {
     colValue = colorValue;
     update();
 }
 
-void Cursor::setColorScale(QColor colorScale)
+void Cursor::setColorScale(const QColor &colorScale)
 {
     colScale = colorScale;
     update();

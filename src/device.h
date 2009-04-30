@@ -20,8 +20,8 @@ public:
     Device(QWidget * parent = 0);
     ~Device();
     void init();
-    int get_mixer_fd();
-    int get_mixer_dev(int);
+    int get_mixer_fd() const;
+    int get_mixer_dev(int) const;
     void create_extensions(int, int);
     QHash <int, Extension *> get_extensions();
     QMap <QString, QStringList> get_system_info();

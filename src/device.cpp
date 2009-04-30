@@ -23,7 +23,7 @@ void Device::init()
     create_extensions(mixer_fd, mixer_dev);
 }
 
-int Device::get_mixer_fd()
+int Device::get_mixer_fd() const
 {
     int mixer_fd = -1;
     const char *dev_mixer;
@@ -50,7 +50,7 @@ int Device::get_mixer_fd()
     return mixer_fd;
 }
 
-int Device::get_mixer_dev(int mixer_fd)
+int Device::get_mixer_dev(int mixer_fd) const
 {
     oss_sysinfo sysinfo;
     oss_mixerinfo mi;

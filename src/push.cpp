@@ -97,19 +97,19 @@ void Push::paintText()
     }
 }
 
-void Push::setText(QString text)
+void Push::setText(const QString &text)
 {
     textBut = text;
     update();
 }
 
-void Push::setFont(QFont font)
+void Push::setFont(const QFont &font)
 {
     fontText = font;
     update();
 }
 
-void Push::setColorText(QColor colorTx)
+void Push::setColorText(const QColor &colorTx)
 {
     colText = colorTx;
     update();
