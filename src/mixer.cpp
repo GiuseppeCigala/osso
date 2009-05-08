@@ -37,6 +37,21 @@ void Mixer::init()
     extension_list = dev->get_extensions();
     // to get system information
     info_dlg = new Info(dev);
+    // create the master volume
+    master_vol = new Master(find_master(), this);
+}
+
+/// find the master volume ///
+Extension * Mixer::find_master()
+{
+    foreach(Extension *ex, extension_list)
+    {
+        if (ex->get_id() == "vmix0-outvol") // hoping that all mixers have it .....
+        {
+            return ex;
+        }
+    }
+    return NULL;
 }
 
 /// check childs for respective parent ///
@@ -226,6 +241,7 @@ void Mixer::create_systray_icon()
     trayIcon->setContextMenu(trayIconMenu);
     trayIcon->setIcon(QIcon(":/icons/osso.png"));
     trayIcon->setToolTip(tr("Osso - OSS 4.1 Mixer"));
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(icon_activated(QSystemTrayIcon::ActivationReason)));
 }
 
 void Mixer::create_systray_actions()
@@ -265,5 +281,16 @@ void Mixer::closeEvent(QCloseEvent *event)
             hide();
             event->ignore();
         }
+    }
+}
+
+void Mixer::icon_activated(QSystemTrayIcon::ActivationReason reason)
+{
+    if (reason == QSystemTrayIcon::Trigger) // single click
+    {
+        QPoint mouse_pos = QCursor::pos();
+        mouse_pos.setY(mouse_pos.y() - master_vol->sizeHint().height());
+        master_vol->move(mouse_pos);
+        master_vol->show();
     }
 }

@@ -16,6 +16,8 @@
 #include "onoff.h"
 #include "enum.h"
 #include "info.h"
+#include "extension.h"
+#include "master.h"
 
 ////////////////////////////////////////
 
@@ -29,6 +31,7 @@ public:
     void init();
     void create_systray_actions();
     void create_systray_icon();
+    Extension * find_master();
     void set_childs();
     void create_controls();
     void create_containers();
@@ -36,6 +39,7 @@ public:
 
 private slots:
     void closeEvent(QCloseEvent *);
+    void icon_activated(QSystemTrayIcon::ActivationReason);
 
 private:
     Device *dev;
@@ -52,6 +56,7 @@ private:
     QSystemTrayIcon *trayIcon;
     QMenu *trayIconMenu;
     Info *info_dlg;
+    Master *master_vol;
 };
 
 #endif

@@ -71,7 +71,7 @@ void Cursor::paintCursor()
         QRectF slot(27, 20, 7, 460);
         painter.drawRect(slot);
         //draw metal support
-        QLinearGradient linGrad(33, 250, 36, 250);
+        QLinearGradient linGrad(33, 250, 37, 250);
         linGrad.setColorAt(0, Qt::black);
         linGrad.setColorAt(1, Qt::white);
         linGrad.setSpread(QGradient::ReflectSpread);
@@ -99,7 +99,7 @@ void Cursor::paintCursor()
         QRectF slot(67, 20, 7, 460);
         painter.drawRect(slot);
         //draw metal support
-        QLinearGradient linGrad(67, 250, 70, 250);
+        QLinearGradient linGrad(67, 250, 71, 250);
         linGrad.setColorAt(0, Qt::black);
         linGrad.setColorAt(1, Qt::white);
         linGrad.setSpread(QGradient::ReflectSpread);
@@ -155,48 +155,25 @@ void Cursor::paintScale()
     QFont valFont("Arial", dimScale, QFont::Normal);
     painter.setFont(valFont);
     painter.setPen(QPen(colScale, 1, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-    double numLineL = 10;
-    double numLineS = numLineL*5;
+    double numLine = 20;
     double size = 445;
-    double deltaVal = abs(max-min)/10.0;
-    double deltaY = 44.5;
 
     if (type == "left")
     {
-        painter.drawLine(50, 473, 50, 28);
+        painter.drawLine(40, 473, 40, 28);
 
-        for (int i = 0; i<=numLineL; i++)
+        for (int i = 0; i<=numLine; i++)
         {
-            painter.drawLine(45, 473-(i*size/numLineL), 50, 473-(i*size/numLineL));
-        }
-        for (int i = 0; i<=numLineS; i++)
-        {
-            painter.drawLine(47, 473-(i*size/numLineS), 50, 473-(i*size/numLineS));
-        }
-        for (int i = 0; i<=numLineL; i++)
-        {
-            QString val = QString("%1").arg(min+(deltaVal*i), 0, 'f', 0);
-            QRectF valL(15, 465-deltaY*i, 25, 20);
-            painter.drawText(valL, Qt::AlignRight, val);
+            painter.drawLine(30, 473-(i*size/numLine), 40, 473-(i*size/numLine));
         }
     }
     if (type == "right")
     {
-        painter.drawLine(50, 473, 50, 28);
+        painter.drawLine(60, 473, 60, 28);
 
-        for (int i = 0; i<=numLineL; i++)
+        for (int i = 0; i<=numLine; i++)
         {
-            painter.drawLine(50, 473-(i*size/numLineL), 55, 473-(i*size/numLineL));
-        }
-        for (int i = 0; i<=numLineS; i++)
-        {
-            painter.drawLine(50, 473-(i*size/numLineS), 53, 473-(i*size/numLineS));
-        }
-        for (int i = 0; i<=numLineL; i++)
-        {
-            QString val = QString("%1").arg(min+(deltaVal*i), 0, 'f', 0);
-            QRectF valR(60, 465-deltaY*i, 25, 20);
-            painter.drawText(valR, Qt::AlignLeft, val);
+            painter.drawLine(60, 473-(i*size/numLine), 70, 473-(i*size/numLine));
         }
     }
     if (type == "mono")
@@ -204,26 +181,13 @@ void Cursor::paintScale()
         QFont valFont("Arial", dimScale-2, QFont::Normal);
         painter.setFont(valFont);
 
-        painter.drawLine(30, 473, 30, 28);
-        painter.drawLine(70, 473, 70, 28);
+        painter.drawLine(25, 473, 25, 28);
+        painter.drawLine(75, 473, 75, 28);
 
-        for (int i = 0; i<=numLineL; i++)
+        for (int i = 0; i<=numLine; i++)
         {
-            painter.drawLine(25, 473-(i*size/numLineL), 30, 473-(i*size/numLineL));
-            painter.drawLine(70, 473-(i*size/numLineL), 75, 473-(i*size/numLineL));
-        }
-        for (int i = 0; i<=numLineS; i++)
-        {
-            painter.drawLine(27, 473-(i*size/numLineS), 30, 473-(i*size/numLineS));
-            painter.drawLine(70, 473-(i*size/numLineS), 73, 473-(i*size/numLineS));
-        }
-        for (int i = 0; i<=numLineL; i++)
-        {
-            QString val = QString("%1").arg(min+(deltaVal*i), 0, 'f', 0);
-            QRectF valL(75, 465-deltaY*i, 25, 20);
-            QRectF valR(0, 465-deltaY*i, 25, 20);
-            painter.drawText(valR, Qt::AlignRight, val);
-            painter.drawText(valL, Qt::AlignLeft, val);
+            painter.drawLine(15, 473-(i*size/numLine), 25, 473-(i*size/numLine));
+            painter.drawLine(75, 473-(i*size/numLine), 85, 473-(i*size/numLine));
         }
     }
 }
