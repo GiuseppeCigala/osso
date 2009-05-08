@@ -11,7 +11,6 @@
 #include "extension.h"
 #include "slider.h"
 
-
 ///////////////////////////////////////
 
 class Master : public QWidget
@@ -19,17 +18,16 @@ class Master : public QWidget
     Q_OBJECT
 
 public:
-    Master(Extension *, QWidget *, QWidget * parent = 0);
+    Master(Slider *, QWidget *, QWidget * parent = 0);
     ~Master();
     void init();
 
-
 private slots:
-    void set_mono_volume(int);
+    void set_volume(int);
     void show_full();
 
 private:
-    Extension *ext;
+    Slider *master_slider;
     QWidget *mix;
 };
 #endif

@@ -31,7 +31,7 @@ public:
     void init();
     void create_systray_actions();
     void create_systray_icon();
-    Extension * find_master();
+    void find_master();
     void set_childs();
     void create_controls();
     void create_containers();

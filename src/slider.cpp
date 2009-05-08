@@ -24,12 +24,14 @@ Slider::~Slider()
 
 void Slider::init()
 {
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), SLOT(update_cursor())); // to update the cursor
+    
     if (ext->get_id().startsWith('@')) // to update the label
-    {
-        timer = new QTimer(this);
-        connect(timer, SIGNAL(timeout()), SLOT(update_label()));
-        timer->start(2000);  // signal every 2000 ms
-    }
+    connect(timer, SIGNAL(timeout()), SLOT(update_label()));
+   
+    timer->start(500);  // signal every 500 ms
+   
     QGridLayout *layout = new QGridLayout();
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(5);
@@ -40,7 +42,7 @@ void Slider::init()
 
     if (type == "mono")
     {
-        Cursor *mono_cursor = new Cursor("mono", this);
+        mono_cursor = new Cursor("mono", this);
         mono_cursor->setMinValue(ext->get_min_value());
         mono_cursor->setMaxValue(ext->get_max_value());
         mono_cursor->setActValue(ext->get_mono_value());
@@ -51,8 +53,8 @@ void Slider::init()
     }
     if (type == "stereo")
     {
-        Cursor *left_cursor = new Cursor("left", this);
-        Cursor *right_cursor = new Cursor("right", this);
+        left_cursor = new Cursor("left", this);
+        right_cursor = new Cursor("right", this);
         left_cursor->setMinValue(ext->get_min_value());
         left_cursor->setMaxValue(ext->get_max_value());
         left_cursor->setActValue(ext->get_left_value());
@@ -102,4 +104,17 @@ void Slider::update_label()
         id_lab->setText(ext->get_id()); // restore the label
     }
     qDebug() << "label:" << ainfo.label;
+}
+
+void Slider::update_cursor()
+{
+    if (type == "mono")
+    {
+        mono_cursor->setActValue(ext->get_mono_value());
+    }
+    if (type == "stereo")
+    {
+        left_cursor->setActValue(ext->get_left_value());
+        right_cursor->setActValue(ext->get_right_value());
+    }
 }

@@ -8,9 +8,9 @@
 
 ////////////////////////////////////////
 
-Master::Master(Extension *ex, QWidget *mx, QWidget * parent) : QWidget(parent)
+Master::Master(Slider *slid, QWidget *mx, QWidget * parent) : QWidget(parent)
 {
-    ext = ex;
+    master_slider = slid; // is the master volume slider
     mix = mx;
     setWindowFlags(Qt::Popup);
     init();
@@ -18,6 +18,8 @@ Master::Master(Extension *ex, QWidget *mx, QWidget * parent) : QWidget(parent)
 
 Master::~Master()
 {
+    delete master_slider;
+    delete mix;
 }
 
 void Master::init()
@@ -25,17 +27,16 @@ void Master::init()
     QVBoxLayout *master_group_layout = new QVBoxLayout();
     master_group_layout->setMargin(5);
     setLayout(master_group_layout);
-    Slider *mono_cursor = new Slider(ext, "mono");
     QPushButton *full_but = new QPushButton(tr("Full view"), this);
-    master_group_layout->addWidget(mono_cursor, Qt::AlignCenter);
+    master_group_layout->addWidget(master_slider, Qt::AlignCenter);
     master_group_layout->addWidget(full_but, Qt::AlignCenter);
-    connect(mono_cursor, SIGNAL(valueChanged(int)), this, SLOT(set_mono_volume(int)));
+    connect(master_slider, SIGNAL(valueChanged(int)), this, SLOT(set_volume(int)));
     connect(full_but, SIGNAL(clicked()), this, SLOT(show_full()));
 }
 
-void Master::set_mono_volume(int volume)
+void Master::set_volume(int volume)
 {
-    ext->set_mono_value(volume);
+    master_slider->set_mono_volume(volume);
 }
 
 // show the full mixer

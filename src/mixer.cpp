@@ -20,6 +20,7 @@ Mixer::Mixer(QWidget * parent) : QFrame(parent)
     merge_childs();
     create_systray_actions();
     create_systray_icon();
+    find_master();
     trayIcon->show();
 }
 
@@ -37,21 +38,20 @@ void Mixer::init()
     extension_list = dev->get_extensions();
     // to get system information
     info_dlg = new Info(dev);
-    // create the master volume
-    master_vol = new Master(find_master(), this);
 }
 
-/// find the master volume ///
-Extension * Mixer::find_master()
+/// find and create the master slider volume ///
+void Mixer::find_master()
 {
     foreach(Extension *ex, extension_list)
     {
         if (ex->get_id() == "vmix0-outvol") // hoping that all mixers have it .....
         {
-            return ex;
+            Slider *master = new Slider(ex, "mono");
+             // create the master volume
+            master_vol = new Master(master, this);
         }
     }
-    return NULL;
 }
 
 /// check childs for respective parent ///
@@ -290,7 +290,7 @@ void Mixer::icon_activated(QSystemTrayIcon::ActivationReason reason)
     {
         QPoint mouse_pos = QCursor::pos();
         mouse_pos.setY(mouse_pos.y() - master_vol->sizeHint().height());
-        master_vol->move(mouse_pos);
+        master_vol->move(mouse_pos); // move above the mouse cursor
         master_vol->show();
     }
 }
