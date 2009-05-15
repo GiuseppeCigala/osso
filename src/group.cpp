@@ -24,13 +24,13 @@ Group::~Group()
 
 void Group::init()
 {
-    layout = new QBoxLayout(QBoxLayout::LeftToRight);
+    layout = new QGridLayout();
     setLayout(layout);
     layout->setAlignment(Qt::AlignCenter);
     setTitle(ext->get_id());
 }
 
-QBoxLayout * Group::get_layout()
+QGridLayout * Group::get_layout()
 {
     return layout;
 }

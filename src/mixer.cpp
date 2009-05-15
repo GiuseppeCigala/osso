@@ -188,7 +188,7 @@ void Mixer::merge_childs()
             qDebug() << "Top Level Group:" << iter.key();
 
             Group *parent = dynamic_cast <Group *>(iter.value());
-            QBoxLayout *group_layout = parent->get_layout();
+            QGridLayout *group_layout = parent->get_layout();
             QPushButton *section_but = new QPushButton(this);
             section_but->setIcon(QIcon(":/icons/audio.png"));
             section_but->setText(extension_list.value(iter.key())->get_id());
@@ -197,7 +197,7 @@ void Mixer::merge_childs()
 
             for (int i = 0; i < childs.size(); ++i)
             {
-                group_layout->addWidget(control_list.value(childs.at(i)), Qt::AlignCenter);
+                group_layout->addWidget(control_list.value(childs.at(i)), i/8, i%8);
                 qDebug() << "Child Control:" << childs.at(i) << "add to Group:" << iter.key();
             }
         }
@@ -206,17 +206,11 @@ void Mixer::merge_childs()
             qDebug() << "Child Group:" << iter.key();
 
             Group *parent = dynamic_cast <Group *>(iter.value());
-            QBoxLayout *group_layout = parent->get_layout();
-
-            if (parent->size().width() >= 400)
-                group_layout->setDirection(QBoxLayout::TopToBottom);
-
-            if (parent->get_flags().contains("MIXF_FLAT"))
-                group_layout->setDirection(QBoxLayout::LeftToRight);
+            QGridLayout *group_layout = parent->get_layout();
 
             for (int i = 0; i < childs.size(); ++i)
             {
-                group_layout->addWidget(control_list.value(childs.at(i)), Qt::AlignCenter);
+                group_layout->addWidget(control_list.value(childs.at(i)), i/4, i%4);
                 qDebug() << "Child Control:" << childs.at(i) << "add to Group:" << iter.key();
             }
         }

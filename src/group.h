@@ -20,13 +20,13 @@ public:
     Group(Extension *, QWidget * parent = 0);
     ~Group();
     void init();
-    QBoxLayout * get_layout();
+    QGridLayout * get_layout();
     QStringList get_flags() const;
 
 private slots:
 
 private:
-    QBoxLayout *layout;
+    QGridLayout *layout;
     Extension *ext;
 
 };

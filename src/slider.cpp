@@ -65,8 +65,8 @@ void Slider::init()
         layout->addWidget(id_lab, 1, 0, 1, 0, Qt::AlignCenter);
         layout->addWidget(left_cursor, 2, 0, Qt::AlignCenter);
         layout->addWidget(right_cursor, 2, 1, Qt::AlignCenter);
-        connect(left_cursor, SIGNAL(valueChanged(int)), this, SLOT(set_left_volume(int)));
-        connect(right_cursor, SIGNAL(valueChanged(int)), this, SLOT(set_right_volume(int)));
+        connect(left_cursor, SIGNAL(hanged(int)), this, SLOT(set_left_volume(int)));
+        connect(right_cursor, SIGNAL(hanged(int)), this, SLOT(set_right_volume(int)));
     }
 }
 
