@@ -49,7 +49,7 @@ void Slider::init()
         layout->addWidget(jack, 0, 0, Qt::AlignCenter);
         layout->addWidget(id_lab, 1, 0, Qt::AlignCenter);
         layout->addWidget(mono_cursor, 2, 0, Qt::AlignCenter);
-        connect(mono_cursor, SIGNAL(valueChanged(int)), this, SLOT(set_mono_volume(int)));
+        connect(mono_cursor, SIGNAL(cursor_val_changed(int)), this, SLOT(set_mono_volume(int)));
     }
     if (type == "stereo")
     {
@@ -65,8 +65,8 @@ void Slider::init()
         layout->addWidget(id_lab, 1, 0, 1, 0, Qt::AlignCenter);
         layout->addWidget(left_cursor, 2, 0, Qt::AlignCenter);
         layout->addWidget(right_cursor, 2, 1, Qt::AlignCenter);
-        connect(left_cursor, SIGNAL(hanged(int)), this, SLOT(set_left_volume(int)));
-        connect(right_cursor, SIGNAL(hanged(int)), this, SLOT(set_right_volume(int)));
+        connect(left_cursor, SIGNAL(cursor_val_changed(int)), this, SLOT(set_left_volume(int)));
+        connect(right_cursor, SIGNAL(cursor_val_changed(int)), this, SLOT(set_right_volume(int)));
     }
 }
 
@@ -103,7 +103,6 @@ void Slider::update_label()
     {
         id_lab->setText(ext->get_id()); // restore the label
     }
-    qDebug() << "label:" << ainfo.label;
 }
 
 void Slider::update_cursor()

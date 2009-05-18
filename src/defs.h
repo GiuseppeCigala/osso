@@ -29,6 +29,9 @@
 #include <QTableWidget>
 #include <QTableWidgetItem>
 #include <QDialogButtonBox>
+#include <QMainWindow>
+#include <QMenuBar>
+#include <QDockWidget>
 
 #include <fcntl.h>
 #include <errno.h>

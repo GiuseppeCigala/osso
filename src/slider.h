@@ -23,6 +23,8 @@ public:
     ~Slider();
     void init();
 
+signals:
+
 public slots:
     void set_mono_volume(int);
     void set_left_volume(int);

@@ -213,7 +213,7 @@ void Cursor::paintValue()
     painter.setFont(valFont);
     painter.drawText(valR, Qt::AlignCenter, val);
 
-    emit valueChanged(val.toInt());
+    emit cursor_val_changed(val.toUInt());
 }
 
 void Cursor::mousePressEvent(QMouseEvent *e)

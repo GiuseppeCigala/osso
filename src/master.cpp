@@ -30,7 +30,6 @@ void Master::init()
     QPushButton *full_but = new QPushButton(tr("Full view"), this);
     master_group_layout->addWidget(master_slider, Qt::AlignCenter);
     master_group_layout->addWidget(full_but, Qt::AlignCenter);
-    connect(master_slider, SIGNAL(valueChanged(int)), this, SLOT(set_volume(int)));
     connect(full_but, SIGNAL(clicked()), this, SLOT(show_full()));
 }
 

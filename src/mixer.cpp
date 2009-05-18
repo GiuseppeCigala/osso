@@ -9,14 +9,15 @@
 
 ////////////////////////////////////////
 
-Mixer::Mixer(QWidget * parent) : QFrame(parent)
+Mixer::Mixer(QWidget * parent) : QMainWindow(parent)
 {
     setWindowTitle(tr("Osso - OSS 4.1 Mixer"));
     setWindowIcon(QIcon(":/icons/osso.png"));
     init();
     set_childs();
     create_controls();
-    create_containers();
+    create_docks();
+    create_menu();
     merge_childs();
     create_systray_actions();
     create_systray_icon();
@@ -31,13 +32,51 @@ Mixer::~Mixer()
 
 void Mixer::init()
 {
-    main_layout = new QGridLayout();
-    setLayout(main_layout);
+    master_group = new QGroupBox(tr("Master"), this);
+    master_group_layout = new QHBoxLayout();
+    master_group->setLayout(master_group_layout);
+    master_group->setAlignment(Qt::AlignCenter);
+    setCentralWidget(master_group);
+
     // open the mixer device and get the extensions
     dev = new Device(this);
     extension_list = dev->get_extensions();
     // to get system information
     info_dlg = new Info(dev);
+}
+
+void Mixer::create_menu()
+{
+    QMenu *view_menu = menuBar()->addMenu(tr("View"));
+    QAction *about_act = menuBar()->addAction(tr("About"));
+    connect(about_act, SIGNAL(triggered()), this, SLOT(show_about()));
+    view_menu->addAction(sections_dock->toggleViewAction());
+    view_menu->addAction(info_dock->toggleViewAction());
+}
+
+void Mixer::create_docks()
+{
+    sections_dock = new QDockWidget(tr("Sections"), this);
+    sections_dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+    sections_frame = new QFrame(this);
+    sections_frame_layout = new QVBoxLayout();
+    sections_frame->setLayout(sections_frame_layout);
+    sections_dock->setWidget(sections_frame);
+
+    info_dock = new QDockWidget(tr("Info"), this);
+    info_dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+    QFrame *info_frame = new QFrame(this);
+    QVBoxLayout *info_frame_layout = new QVBoxLayout();
+    info_frame->setLayout(info_frame_layout);
+    info_dock->setWidget(info_frame);
+    QPushButton *info_but = new QPushButton(this);
+    info_but->setIcon(QIcon(":/icons/card.png"));
+    info_but->setText(tr("Info"));
+    connect(info_but, SIGNAL(clicked()), info_dlg, SLOT(show()));
+    info_frame_layout->addWidget(info_but);
+
+    addDockWidget(Qt::RightDockWidgetArea, sections_dock);
+    addDockWidget(Qt::RightDockWidgetArea, info_dock);
 }
 
 /// find and create the master slider volume ///
@@ -140,37 +179,6 @@ void Mixer::create_controls()
     }
 }
 
-/// create the main containers ///
-void Mixer::create_containers()
-{
-    master_group = new QGroupBox(tr("Master"), this);
-    master_group_layout = new QHBoxLayout();
-    master_group->setLayout(master_group_layout);
-
-    sections_group = new QGroupBox(tr("Sections"), this);
-    sections_group_layout = new QVBoxLayout();
-    sections_group->setLayout(sections_group_layout);
-
-    QGroupBox *info_group = new QGroupBox(tr("Info"), this);
-    QVBoxLayout *info_group_layout = new QVBoxLayout();
-    info_group->setLayout(info_group_layout);
-    QPushButton *info_but = new QPushButton(this);
-    info_but->setIcon(QIcon(":/icons/card.png"));
-    info_but->setText(tr("Info"));
-    connect(info_but, SIGNAL(clicked()), info_dlg, SLOT(show()));
-    info_group_layout->addWidget(info_but);
-
-    QPushButton *quit_but = new QPushButton(this);
-    quit_but->setIcon(QIcon(":/icons/quit.png"));
-    quit_but->setText(tr("Quit"));
-    connect(quit_but, SIGNAL(clicked()), this, SLOT(close()));
-
-    main_layout->addWidget(master_group, 0, 0, 0, 1);
-    main_layout->addWidget(sections_group, 0, 1);
-    main_layout->addWidget(info_group, 1, 1);
-    main_layout->addWidget(quit_but, 2, 1);
-}
-
 /// merge the childs to respective parent ///
 void Mixer::merge_childs()
 {
@@ -193,7 +201,7 @@ void Mixer::merge_childs()
             section_but->setIcon(QIcon(":/icons/audio.png"));
             section_but->setText(extension_list.value(iter.key())->get_id());
             connect(section_but, SIGNAL(clicked()), parent, SLOT(show()));
-            sections_group_layout->addWidget(section_but);
+            sections_frame_layout->addWidget(section_but);
 
             for (int i = 0; i < childs.size(); ++i)
             {
@@ -287,4 +295,17 @@ void Mixer::icon_activated(QSystemTrayIcon::ActivationReason reason)
         master_vol->move(mouse_pos); // move above the mouse cursor
         master_vol->show();
     }
+}
+
+void Mixer::show_about()
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(tr("About Osso"));
+    msgBox.setWindowIcon(QIcon(":/icons/osso.png"));
+    msgBox.setIconPixmap(QPixmap(":/icons/osso.png"));
+    msgBox.setText(tr("<b>Osso - OSS 4.1 Mixer</b>"));
+    msgBox.setInformativeText(tr("Version 0.3"));
+    msgBox.setDetailedText(tr("Author: Giuseppe Cigala ").append("\nContact: g_cigala@virgilio.it"));
+    //msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.exec();
 }

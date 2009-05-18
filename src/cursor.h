@@ -52,7 +52,7 @@ public:
     void set_type(QString);
 
 signals:
-    void valueChanged(int);
+    void cursor_val_changed(int);
 
 public slots:
     void setColorBg(const QColor &);

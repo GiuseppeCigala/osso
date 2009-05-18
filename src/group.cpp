@@ -28,6 +28,7 @@ void Group::init()
     setLayout(layout);
     layout->setAlignment(Qt::AlignCenter);
     setTitle(ext->get_id());
+    setAlignment(Qt::AlignCenter);
 }
 
 QGridLayout * Group::get_layout()
