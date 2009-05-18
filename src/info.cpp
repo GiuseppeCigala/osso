@@ -82,7 +82,7 @@ void Info::init()
     }
     
     QDialogButtonBox *close_box = new QDialogButtonBox(this);
-    QPushButton *close = new QPushButton(QIcon(":/icons/close.png"), tr("Close"), this);
+    QPushButton *close = new QPushButton(QIcon(":/icons/quit.png"), tr("Close"), this);
     close_box->addButton(close, QDialogButtonBox::AcceptRole);
     connect(close_box, SIGNAL(accepted()), this, SLOT(close()));
     layout->addWidget(close_box, i, 1);
