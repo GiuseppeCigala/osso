@@ -224,11 +224,19 @@ int Extension::get_parent() const
 
 QColor Extension::get_color() const
 {
-    int red = (ext.rgbcolor & 0xff0000) >> 8;
-    int green = (ext.rgbcolor & 0x00ff00);
-    int blue = (ext.rgbcolor & 0x0000ff) << 8;
-    int alpha = 255;
-    QColor col(red, green, blue, alpha);
+    if (ext.rgbcolor != 0)
+    {
+        int red = (ext.rgbcolor & 0xff0000);
+        int green = (ext.rgbcolor & 0x00ff00);
+        int blue = (ext.rgbcolor & 0x0000ff);
+        int alpha = 255;
+
+        QColor col(red, green, blue, alpha);
+
+        if(col.isValid())
+            return col;
+    }
+    QColor col(0, 0, 0, 255);
     return col;
 }
 

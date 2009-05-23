@@ -39,6 +39,7 @@ void Slider::init()
     id_lab = new QLabel(ext->get_id(), this);
     Jack *jack = new Jack();  // 3.5 mm jacks for audio input and outputs (pink=mic, etc)
     jack->setColor(ext->get_color());
+    qDebug() << "Jack color:" << ext->get_color();
 
     if (type == "mono")
     {
